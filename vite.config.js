@@ -7,5 +7,6 @@ export default defineConfig({
   server: {
     port: 8080
   },
+  setupFiles: ['./src/setup.js'],
 })
 
