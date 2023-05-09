@@ -1,22 +1,16 @@
 import { useState } from "react"
 import "./styles.css"
 import { v4 as uuidv4 } from 'uuid'
+import ToDoAddForm from "./todoaddform"
 
 export default function App() {
   // declare new state var
-  const [newItem, setNewItem] = useState("")
   const [toDos, setToDos] = useState([])
-  
-  // event handler on form submit
-  function handleSubmit(e) {
-    // prevent default response of the form to submit
-    e.preventDefault()
-    // function to add item into list base on previous array
+
+  function addToDo(title){
     setToDos((currentToDos) => {
-      return [...currentToDos, { id: uuidv4(), title: newItem, completed: false }]
+      return [...currentToDos, { id: uuidv4(), title: title, completed: false }]
     })
-   
-  setNewItem("")
   }
 
   function toggleToDo(id,completed) {
@@ -39,17 +33,7 @@ export default function App() {
   
   return (
     <>
-      <form onSubmit={handleSubmit} className="new-item-form">
-        <div>
-          <label htmlFor="item">New Item</label>
-	  <input 
-            value={newItem}
-            onChange={ e => setNewItem(e.target.value) } 
-            type="text"
-            id="item"/>
-        </div>
-        <button className="btn">Add</button>
-      </form>
+      <ToDoAddForm addToDo={addToDo} /> 
       <h1></h1>
       <ul>
         {toDos.length === 0 && "Nothing here"}
