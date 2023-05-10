@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "./styles.css"
 import { v4 as uuidv4 } from 'uuid'
 import ToDoAddForm from "./todoaddform"
@@ -6,7 +6,19 @@ import ToDoList from "./todolist"
 
 export default function App() {
   // declare new state var
-  const [toDos, setToDos] = useState([])
+  const [toDos, setToDos] = useState(() => {
+    const localValue = localStorage.getItem("ITEMS")
+    // return empty if nothing in local storage
+    if(localValue === null){return []}
+    // return Value if localstorage exist
+    return JSON.parse(localValue) 
+  })
+  
+  // run this code when [toDos]array change 
+  useEffect(() => {
+    // save to local storage
+    localStorage.setItem("ITEMS",JSON.stringify(toDos))
+  }, [toDos])
 
   function addToDo(title){
     setToDos((currentToDos) => {
