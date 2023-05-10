@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export default function ToDoAddForm(props) {
+export default function ToDoAddForm({ addToDo }) {
   // declare new state var
   const [newItem, setNewItem] = useState("")
 
@@ -11,7 +11,7 @@ export default function ToDoAddForm(props) {
     e.preventDefault()
     // function to add item into list base on previous array
     if(newItem === "") return
-    props.addToDo(newItem)
+    addToDo(newItem)
 
   setNewItem("")
   }

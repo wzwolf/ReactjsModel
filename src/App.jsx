@@ -2,6 +2,7 @@ import { useState } from "react"
 import "./styles.css"
 import { v4 as uuidv4 } from 'uuid'
 import ToDoAddForm from "./todoaddform"
+import ToDoList from "./todolist"
 
 export default function App() {
   // declare new state var
@@ -9,6 +10,7 @@ export default function App() {
 
   function addToDo(title){
     setToDos((currentToDos) => {
+      console.log(currentToDos)
       return [...currentToDos, { id: uuidv4(), title: title, completed: false }]
     })
   }
@@ -35,20 +37,11 @@ export default function App() {
     <>
       <ToDoAddForm addToDo={addToDo} /> 
       <h1></h1>
-      <ul>
-        {toDos.length === 0 && "Nothing here"}
-        {toDos.map( toDo => {
-          return (
-            <li  key={toDo.id} >
-              <label>
-                <input type="checkbox" checked={toDo.completed} onChange={e => toggleToDo(toDo.id, e.target.checked)} />
-                {toDo.title}
-              </label>
-              <button className="btn btn-danger" onClick={() => deleteToDo(toDo.id)}>Delete</button>
-            </li>            
-          )
-        })}
-      </ul>
+      <ToDoList 
+        toDos={toDos}
+        toggleToDo={toggleToDo}
+        deleteToDo={deleteToDo}
+      />
     </>
   )
 }
